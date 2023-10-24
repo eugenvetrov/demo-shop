@@ -1,0 +1,10 @@
+.product-list {
+
+    display: flex;
+
+    &__card {
+        width: 100%;
+        max-width: 200px;
+        margin: 20px;
+    }
+}
