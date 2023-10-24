@@ -1,2 +1,9 @@
-hello
-
+<div class="product-list">
+    <mat-card *ngFor="let product of products" class="product-list__card">
+        <mat-card-header color="primary"  class="product-list__card-header">{{ product.name  }}</mat-card-header>
+        <mat-card-content   class="product-list__card-content">
+            <p>Price: {{ product.price }}</p>
+            <p>Category: {{ product.category }}</p>
+        </mat-card-content>
+    </mat-card>
+</div>

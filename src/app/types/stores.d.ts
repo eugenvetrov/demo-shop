@@ -5,9 +5,17 @@ interface Product {
     "price": number
 }
 
-interface ProductState {
-    products: Product[]
+interface ProductCategory {
+    "id": number,
+    "name": string
 }
+
+interface ProductState {
+    "products": Product[],
+    "categories": ProductCategory[]
+}
+
+
 
 interface AppState {
     products: ProductState;

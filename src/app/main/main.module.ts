@@ -6,7 +6,6 @@ import { ProductModule } from '@app/product/product.module';
 import { MainContentComponent } from '@app/main/main-content/main-content.component';
 
 
-
 @NgModule({
   declarations: [
     MainComponent,
@@ -14,7 +13,9 @@ import { MainContentComponent } from '@app/main/main-content/main-content.compon
     MainContentComponent
   ],
   exports: [
-    MainComponent
+    MainComponent,
+    MainContentComponent,
+    MainMenuComponent
   ],
   imports: [
     CommonModule,

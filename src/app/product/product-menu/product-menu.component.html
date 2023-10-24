@@ -1,1 +1,7 @@
-hello
+<button mat-button color="primary">
+    <a href="/">Home</a>
+</button>
+<button mat-button color="primary"
+ *ngFor="let category of categories">
+    <a href="category/{{ category.id }}">{{ category.name }}</a>
+</button>

@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { ProductApiService } from '@app/product/services/api/product-api.service';
 import { Store } from '@ngrx/store';
-import { updateProducts } from '../../stores/product/product.actions';
+import { updateProducts, updateProductCategories } from '../../stores/product/product.actions';
 import { Observable } from 'rxjs/internal/Observable';
 import { selectProducts } from '@app/stores/product/product.selectors';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -12,22 +13,29 @@ import { selectProducts } from '@app/stores/product/product.selectors';
   styleUrls: ['./product-list.component.scss']
 })
 export class ProductListComponent {
-  products$: Observable<ProductState>
+  products$: Observable<ProductState>;
+  products: Product[] = [];
+  routeCategoryId?: number = undefined;
   
   constructor(
     private productApi: ProductApiService,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private route: ActivatedRoute
   ) { 
     this.products$ = this.store.select(selectProducts);
+    this.routeCategoryId = this.route.snapshot.params['categoryId']
   }
   
   async ngOnInit() {
     const productsData = await this.productApi.getData();
-    const products = productsData.productItemsData
-    this.store.dispatch(updateProducts({products: products}))
+    this.store.dispatch(updateProducts({products: productsData.productItemsData}))
+    this.store.dispatch(updateProductCategories({categories: productsData.productCategoryData}))
     this.products$.subscribe((data) => {
-      console.log(data.products);
-    })
-    
+      if (data.products && this.routeCategoryId) {        
+        this.products = data.products.filter(product => product?.category == this.routeCategoryId);        
+      } else if (data.products && !this.routeCategoryId) {
+        this.products = data.products;
+      }
+    }) 
   }
 }
