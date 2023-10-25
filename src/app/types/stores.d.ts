@@ -12,7 +12,8 @@ interface ProductCategory {
 
 interface ProductState {
     "products": Product[],
-    "categories": ProductCategory[]
+    "categories": ProductCategory[],
+    "selectedCategory"?: ProductCategory
 }
 
 
