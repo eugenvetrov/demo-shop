@@ -5,20 +5,7 @@
     justify-content: center;
 
     &__card {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        max-width: 200px;
         margin: 20px;
-
-        &-header {
-            display: flex;
-            flex-direction: column;
-        }
-
-        &-content {
-            display: flex;
-            flex-direction: column;
-        }
     }
+
 }

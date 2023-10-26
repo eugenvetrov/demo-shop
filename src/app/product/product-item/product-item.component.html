@@ -1,1 +1,7 @@
-<p>product-item works!</p>
+<mat-card class="product-item">
+    <mat-card-header color="primary"  class="product-item__header">{{ product.name  }}</mat-card-header>
+    <mat-card-content   class="product-item__content">
+        <p>Price: {{ product.price }}</p>
+        <p>Category: {{ product.category }}</p>
+    </mat-card-content>
+</mat-card>
