@@ -8,4 +8,10 @@
         margin: 20px;
     }
 
+    &__text {
+        &_not-found {
+            margin-top: 30px;
+        }
+    }
+
 }

@@ -38,7 +38,6 @@ export class ProductFilterComponent {
     this.selectedCategory$ = this.store.select(selectedCategorySelector)
   }
   
-
   async ngOnInit() {
     this.productFilterFormCategorySubscription = this.productFilterForm.get('name')?.valueChanges.subscribe(
       (value) => {
@@ -47,12 +46,13 @@ export class ProductFilterComponent {
       }
     )
 
-    this.productFilterFormCategorySubscription = this.productFilterForm.get('category')?.valueChanges.subscribe(
-      (value) => {
-        let selectedCategory
-        if (value) selectedCategory = JSON.parse(JSON.stringify(value));
-        this.store.dispatch(updateSelectedProductCategory({ selectedCategory: selectedCategory}));
-      }
+    this.productFilterFormCategorySubscription =
+      this.productFilterForm.get('category')?.valueChanges.subscribe(
+        (value) => {
+          let selectedCategory
+          if (value) selectedCategory = JSON.parse(JSON.stringify(value));
+          this.store.dispatch(updateSelectedProductCategory({ selectedCategory: selectedCategory}));
+        }
     )
 
     this.selectedCategorySubscription = this.selectedCategory$.subscribe((selectedCategory) => {

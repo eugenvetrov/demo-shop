@@ -21,6 +21,7 @@ export class ProductListComponent {
   routeCategoryId?: number = undefined;
   routerSubscription: Subscription | undefined;
   productStateSubscription: Subscription | undefined;
+  productNotFound: boolean = false;
   
   constructor(
     private productApi: ProductApiService,
@@ -42,24 +43,30 @@ export class ProductListComponent {
       combineLatest([this.productState$, this.productNameSearch$, this.route.params])
 
     this.productStateSubscription = combineProductNameSearchRouteParams
-    .subscribe(([data, productNameSearch, params]) => {
-      this.routeCategoryId = Number(params['categoryId'])
-      
-      if (data.products && this.routeCategoryId) {        
-        this.products = data.products.filter(product => product?.category == this.routeCategoryId);      
-      } else if (data.products && !this.routeCategoryId) {
-        this.products = data.products;
-      }
-      if(productNameSearch)
-        this.products =
-          this.products.filter(product => product.name
-                                          .toLowerCase()
-                                          .includes(productNameSearch.toLowerCase()))
-    }) 
+      .subscribe(([data, productNameSearch, params]) => {
+        this.routeCategoryId = Number(params['categoryId'])
+        if (data.products && this.routeCategoryId) {        
+          this.products = data.products.filter(product => product?.category == this.routeCategoryId);
+        } else if (data.products && !this.routeCategoryId) {
+          this.products = data.products;
+        }
+        if(productNameSearch)
+          this.products =
+            this.products.filter(product => product.name
+                                            .toLowerCase()
+                                            .includes(productNameSearch.toLowerCase()));
+        this.getProductNotFound();
+      })
   }
 
   ngOnDestroy() {
     if (this.productStateSubscription)
       this.productStateSubscription.unsubscribe();
+  }
+
+  getProductNotFound() {
+    if (!this.products.length) {
+      this.productNotFound = true;
+    } else this.productNotFound = false;
   }
 }

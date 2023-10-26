@@ -7,5 +7,4 @@ import { Component, Input } from '@angular/core';
 })
 export class ProductItemComponent {
   @Input() product = {} as Product;
-
 }
