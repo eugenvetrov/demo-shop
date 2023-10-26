@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/internal/Observable';
-import { selectProducts } from '@app/stores/product/product.selectors';
+import { categorySelector } from '../../stores/product/product.selectors';
 
 @Component({
   selector: 'app-product-menu',
@@ -9,16 +9,16 @@ import { selectProducts } from '@app/stores/product/product.selectors';
   styleUrls: ['./product-menu.component.scss']
 })
 export class ProductMenuComponent {
-  products$: Observable<ProductState>;
+  categories$: Observable<ProductCategory[]>;
   categories: ProductCategory[] = [];
 
   constructor (private store: Store<AppState>) {
-    this.products$ = this.store.select(selectProducts);
+    this.categories$ = this.store.select(categorySelector);
   }
 
   ngOnInit() {
-    this.products$.subscribe((data) => {
-      this.categories = data.categories
+    this.categories$.subscribe((categories) => {
+      this.categories = categories
     })
   }
 

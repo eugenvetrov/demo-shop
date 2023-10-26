@@ -7,8 +7,10 @@ import {
 export const initialState: ProductState = {
   products: [],
   categories: [],
-  selectedCategory: { "id": 0, "name": ''}
+  selectedCategory: {} as ProductCategory
 };
+
+
 
 export const productReducer = createReducer(
   initialState,

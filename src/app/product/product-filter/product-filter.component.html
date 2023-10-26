@@ -4,10 +4,10 @@
     <input matInput type="text" formControlName="name" class="product__filter-input">
   </mat-form-field>
   <mat-form-field  class="product__filter-field">
-  <mat-label for="category"  class="product__filter-label">Category </mat-label>
+  <mat-label for="category"  class="product__filter-label">{{ (selectedCategory$ | async)?.name  }}</mat-label>
     <mat-select type="text" formControlName="category" class="product__filter-input">
       <mat-option>-- None --</mat-option>
-      <mat-option value="{{ category.name }}" *ngFor="let category of categories">
+      <mat-option [value]="category" *ngFor="let category of categories$ | async">
         {{ category.name }}
       </mat-option>
     </mat-select>

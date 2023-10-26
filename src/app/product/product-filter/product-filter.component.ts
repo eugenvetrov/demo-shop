@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-import { selectProducts } from '@app/stores/product/product.selectors';
+import { FormBuilder } from '@angular/forms';
+import { productsSelector, categorySelector } from '@app/stores/product/product.selectors';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { selectedCategorySelector } from '../../stores/product/product.selectors';
+import { updateSelectedProductCategory } from '../../stores/product/product.actions';
 
 @Component({
   selector: 'app-product-filter',
@@ -10,30 +12,38 @@ import { Observable } from 'rxjs';
   styleUrls: ['./product-filter.component.scss']
 })
 export class ProductFilterComponent {
-  products$: Observable<ProductState>;
-  categories: ProductCategory[] = [];
+  products$: Observable<Product[]>;
+  categories$: Observable<ProductCategory[]>;
+  selectedCategory$: Observable<ProductCategory | undefined>;
   selectedCategory: ProductCategory = {} as ProductCategory;
+  productFilterForm =  this.fb.group({
+    name: [''],
+    category: [''],
+  });
+  productFilterFormCategorySubscription: Subscription | undefined;
+
 
   constructor(
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private fb: FormBuilder
   ) {
-    this.products$ = this.store.select(selectProducts);
-    this.products$.subscribe((data) => {
-      this.categories = data.categories
-    })
+    this.products$ = this.store.select(productsSelector);
+    this.categories$ = this.store.select(categorySelector);
+    this.selectedCategory$ = this.store.select(selectedCategorySelector)
   }
   
-  productFilterForm = new FormGroup({
-    name: new FormControl(''),
-    category: new FormControl(''),
-  });
 
-  ngOnInit() {
-    // this.productFilterForm.setValue({
-    //   name: 'name',
-    //   category: 'category'
-    // })
-    
+  async ngOnInit() {
+    this.productFilterFormCategorySubscription = this.productFilterForm.get('category')?.valueChanges.subscribe(
+      (value) => {
+        const selectedCategory = JSON.parse(JSON.stringify(value));
+        this.store.dispatch(updateSelectedProductCategory({ selectedCategory: selectedCategory}));
+      }
+    )
+  }
 
+  ngOnDestroy() {
+    if (this.productFilterFormCategorySubscription)
+      this.productFilterFormCategorySubscription.unsubscribe();
   }
 }

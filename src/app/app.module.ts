@@ -11,6 +11,7 @@ import { productReducer } from '@app/stores/product/product.reducer'
 
 import { PagesModule } from '@app/pages/pages.module'
 import { MyErrorHandlerService } from '@app/services/error/my-error-handler.service';
+import { metaReducers } from '@app/stores/meta-reducers';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,7 @@ import { MyErrorHandlerService } from '@app/services/error/my-error-handler.serv
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({ products: productReducer }),
+    StoreModule.forRoot({ products: productReducer }, { metaReducers }),
     PagesModule
   ],
   providers: [
