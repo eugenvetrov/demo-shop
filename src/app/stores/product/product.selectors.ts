@@ -12,6 +12,11 @@ export const categorySelector = createSelector(
     (state: ProductState) => state.categories
 )
 
+export const productNameSearchSelector = createSelector(
+    selectProducts,
+    (state: ProductState) => state.productNameSearch
+)
+
 export const selectedCategorySelector = createSelector(
     selectProducts,
     (state: ProductState) => state.selectedCategory

@@ -1,6 +1,6 @@
-<form [formGroup]="productFilterForm" class="product__filter">
+<form [formGroup]="productFilterForm" (ngSubmit)="handleFilterSubmit()" class="product__filter">
   <mat-form-field class="product__filter-field" appearance="outline">
-    <mat-label for="name" class="product__filter-label">Name</mat-label>
+    <mat-label for="name" class="product__filter-label">Name includes: {{ productSearchName$ | async}}</mat-label>
     <input matInput type="text" formControlName="name" class="product__filter-input">
   </mat-form-field>
   <mat-form-field  class="product__filter-field">
@@ -12,4 +12,5 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
+  <button type="submit" mat-button color="primary">Select category</button>
 </form>

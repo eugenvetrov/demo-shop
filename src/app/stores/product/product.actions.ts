@@ -6,5 +6,8 @@ export const updateProducts = createAction('[ProductList Component] updateProduc
 export const updateProductCategories = createAction('[ProductList Component] updateProductCategpries',
                                             props<{ categories: ProductCategory[]}>());
 
+export const updateProductNameSearch = createAction('[ProductFilter Component] updateProductNameSearch',
+                                            props<{ productNameSearch: string}>());
+
 export const updateSelectedProductCategory = createAction('[ProductFilter Component] updateSelectedProductCategory',
-                                            props<{ selectedCategory: ProductCategory}>());
+                                            props<{ selectedCategory: ProductCategory | undefined}>());

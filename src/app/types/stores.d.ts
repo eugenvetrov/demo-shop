@@ -13,6 +13,7 @@ interface ProductCategory {
 interface ProductState {
     "products": Product[],
     "categories": ProductCategory[],
+    "productNameSearch"?: string,
     "selectedCategory"?: ProductCategory
 }
 

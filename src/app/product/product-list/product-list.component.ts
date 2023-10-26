@@ -4,8 +4,9 @@ import { Store } from '@ngrx/store';
 import { updateProducts, updateProductCategories } from '@app/stores/product/product.actions';
 import { Observable } from 'rxjs/internal/Observable';
 import { selectProducts } from '@app/stores/product/product.selectors';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Subscription, combineLatest, combineLatestWith, merge } from 'rxjs';
+import { productNameSearchSelector } from '@app/stores/product/product.selectors';
 
 
 @Component({
@@ -15,35 +16,50 @@ import { Subscription } from 'rxjs';
 })
 export class ProductListComponent {
   productState$: Observable<ProductState>;
+  productNameSearch$: Observable<string | undefined>;
   products: Product[] = [];
   routeCategoryId?: number = undefined;
+  routerSubscription: Subscription | undefined;
   productStateSubscription: Subscription | undefined;
   
   constructor(
     private productApi: ProductApiService,
     private store: Store<AppState>,
+    private router: Router,
     private route: ActivatedRoute
   ) { 
     this.productState$ = this.store.select(selectProducts);
-    this.routeCategoryId = this.route.snapshot.params['categoryId']
+    this.productNameSearch$ = this.store.select(productNameSearchSelector)
   }
   
   async ngOnInit() {
+
     const productsData = await this.productApi.getData();
     this.store.dispatch(updateProducts({products: productsData.productItemsData}));
     this.store.dispatch(updateProductCategories({categories: productsData.productCategoryData}));
 
-    this.productStateSubscription = this.productState$.subscribe((data) => {
+    const combineProductNameSearchRouteParams =
+      combineLatest([this.productState$, this.productNameSearch$, this.route.params])
+
+    this.productStateSubscription = combineProductNameSearchRouteParams
+    .subscribe(([data, productNameSearch, params]) => {
+      this.routeCategoryId = Number(params['categoryId'])
+      
       if (data.products && this.routeCategoryId) {        
-        this.products = data.products.filter(product => product?.category == this.routeCategoryId);        
+        this.products = data.products.filter(product => product?.category == this.routeCategoryId);      
       } else if (data.products && !this.routeCategoryId) {
         this.products = data.products;
       }
+      if(productNameSearch)
+        this.products =
+          this.products.filter(product => product.name
+                                          .toLowerCase()
+                                          .includes(productNameSearch.toLowerCase()))
     }) 
   }
 
   ngOnDestroy() {
-    if(this.productStateSubscription)
+    if (this.productStateSubscription)
       this.productStateSubscription.unsubscribe();
   }
 }
