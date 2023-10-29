@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { ProductCartService } from '@app/product/services/cart/product-cart.service';
 
 @Component({
   selector: 'app-product-item',
@@ -7,4 +8,16 @@ import { Component, Input } from '@angular/core';
 })
 export class ProductItemComponent {
   @Input() product = {} as Product;
+
+  constructor (
+    private productCartService: ProductCartService
+  ) {}
+
+  handleAddClick() {
+    this.productCartService.addProductToCart(this.product)
+  }
+
+  handleRemoveClick() {
+    this.productCartService.removeProductFromCart(this.product)
+  }
 }

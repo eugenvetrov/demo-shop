@@ -14,5 +14,5 @@ export const updateSelectedProductCategory = createAction('[ProductFilter Compon
 
 export const initProductCartMap = createAction('[ProductList Component] initProductCartMap')
 
-export const addProductToCart = createAction('[ProductList component] addProductToCart',
-                                            props<{ productAtCart: ProductId }>());
+export const updateProductCart = createAction('[ProductList component] updateProductCart',
+                                            props<{ productCart: ProductCart[] }>());

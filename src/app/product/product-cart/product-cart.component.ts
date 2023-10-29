@@ -9,7 +9,9 @@ import { productCartSelector } from '../../stores/product/product.selectors';
   styleUrls: ['./product-cart.component.scss']
 })
 export class ProductCartComponent {
-  productCart$: Observable<ProductId[]>;
+  productCart$: Observable<ProductCart[]>;
+  productCartTotalCount: number = 0;
+  productCartTotalPrice: number = 0;
 
   constructor(
     private store: Store<AppState>
@@ -18,8 +20,15 @@ export class ProductCartComponent {
   }
 
   ngOnInit() {
-    this.productCart$.subscribe((product) => {
-      console.log(product);
+    this.productCart$.subscribe((cart) => {
+      this.productCartTotalCount = 0;
+      this.productCartTotalPrice = 0;
+      cart.forEach((product) => {
+        this.productCartTotalCount = this.productCartTotalCount + product.counter;
+        this.productCartTotalPrice = this.productCartTotalPrice + product.totalPrice;
+      })
+      console.log(cart);
+      
     })
   }
 }

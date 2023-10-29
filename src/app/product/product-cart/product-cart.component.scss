@@ -1,0 +1,15 @@
+.product-cart {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    text-align: center;
+    width: 100%;
+    align-items: center;
+    margin: 20px;
+
+    &__button {
+        width: 100%;
+        max-width: 200px;
+        margin: 10px;
+    }
+}

@@ -10,8 +10,10 @@ interface ProductCategory {
     "name": string
 }
 
-interface ProductId {
-    "productId": number
+interface ProductCart {
+    "productId": number,
+    "counter": number,
+    "totalPrice": number
 }
 
 interface ProductState {
@@ -19,7 +21,7 @@ interface ProductState {
     "categories": ProductCategory[],
     "productNameSearch"?: string,
     "selectedCategory"?: ProductCategory,
-    "productCart": ProductId[]
+    "productCart": ProductCart[]
 }
 
 interface AppState {

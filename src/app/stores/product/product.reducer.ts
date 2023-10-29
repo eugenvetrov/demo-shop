@@ -1,12 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
-import { state } from '@angular/animations';
 import {
   updateSelectedProductCategory,
   updateProductCategories,
   updateProducts, 
   updateProductNameSearch,
-  addProductToCart,
-initProductCartMap
+  updateProductCart
 } from '@app/stores/product/product.actions';
 
 export const initialState: ProductState = {
@@ -14,7 +12,7 @@ export const initialState: ProductState = {
   categories: [],
   productNameSearch: '',
   selectedCategory: {} as ProductCategory,
-  productCart: [] as ProductId[]
+  productCart: [] as ProductCart[]
 };
 
 
@@ -24,5 +22,5 @@ export const productReducer = createReducer(
   on(updateProductCategories, (state, action) => ({ ...state, categories: action.categories })),
   on(updateProductNameSearch, (state, action) => ({ ...state, productNameSearch: action.productNameSearch})),
   on(updateSelectedProductCategory, (state, action) => ({ ...state, selectedCategory: action?.selectedCategory})),
-  on(addProductToCart, (state, action) => ({ ...state, productCart: [...state.productCart, action.productAtCart]}))
+  on(updateProductCart, (state, action) => ({ ...state, productCart: action.productCart})),
 );

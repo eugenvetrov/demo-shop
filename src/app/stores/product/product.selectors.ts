@@ -1,5 +1,4 @@
 import { createSelector } from "@ngrx/store";
-import { state } from '@angular/animations';
 
 export const selectProducts = (state: AppState) => state.products
 

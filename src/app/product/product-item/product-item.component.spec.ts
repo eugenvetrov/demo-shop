@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProductItemComponent } from './product-item.component';
 import { MatCardModule } from '@angular/material/card';
+import { StoreModule } from '@ngrx/store';
 
 describe('ProductItemComponent', () => {
   let component: ProductItemComponent;
@@ -9,7 +10,7 @@ describe('ProductItemComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [MatCardModule],
+      imports: [MatCardModule, StoreModule.forRoot()],
       declarations: [ProductItemComponent]
     }).compileComponents();
     fixture = TestBed.createComponent(ProductItemComponent);

@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { ProductApiService } from '@app/product/services/api/product-api.service';
 import { Store } from '@ngrx/store';
-import { updateProducts, updateProductCategories, addProductToCart } from '@app/stores/product/product.actions';
+import { updateProducts, updateProductCategories } from '@app/stores/product/product.actions';
 import { Observable } from 'rxjs/internal/Observable';
-import { productCartSelector, selectProducts } from '@app/stores/product/product.selectors';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { Subscription, combineLatest, combineLatestWith, merge } from 'rxjs';
-import { productNameSearchSelector } from '@app/stores/product/product.selectors';
+import { selectProducts, productNameSearchSelector } from '@app/stores/product/product.selectors';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription, combineLatest } from 'rxjs';
+import { ProductCartService } from '../services/cart/product-cart.service';
 
 
 @Component({
@@ -17,7 +17,6 @@ import { productNameSearchSelector } from '@app/stores/product/product.selectors
 export class ProductListComponent {
   productState$: Observable<ProductState>;
   productNameSearch$: Observable<string | undefined>;
-  productCart$: Observable<ProductId[]>;
   products: Product[] = [];
   routeCategoryId?: number = undefined;
   routerSubscription: Subscription | undefined;
@@ -27,11 +26,11 @@ export class ProductListComponent {
   constructor(
     private productApi: ProductApiService,
     private store: Store<AppState>,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private productCartService: ProductCartService
   ) { 
     this.productState$ = this.store.select(selectProducts);
     this.productNameSearch$ = this.store.select(productNameSearchSelector);
-    this.productCart$ = this.store.select(productCartSelector)
   }
   
   async ngOnInit() {
@@ -39,12 +38,6 @@ export class ProductListComponent {
     const productsData = await this.productApi.getData();
     this.store.dispatch(updateProducts({products: productsData.productItemsData}));
     this.store.dispatch(updateProductCategories({categories: productsData.productCategoryData}));
-    this.productCart$.subscribe((store) => {
-      console.log(store);
-    })
-
-    this.store.dispatch(addProductToCart({productAtCart: {productId: 1}}))
-    this.store.dispatch(addProductToCart({productAtCart: {productId: 1}}))
 
     const combineProductNameSearchRouteParams =
       combineLatest([this.productState$, this.productNameSearch$, this.route.params])
