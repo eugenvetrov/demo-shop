@@ -1,4 +1,5 @@
 import { createSelector } from "@ngrx/store";
+import { state } from '@angular/animations';
 
 export const selectProducts = (state: AppState) => state.products
 
@@ -20,4 +21,9 @@ export const productNameSearchSelector = createSelector(
 export const selectedCategorySelector = createSelector(
     selectProducts,
     (state: ProductState) => state.selectedCategory
+)
+
+export const productCartSelector = createSelector(
+    selectProducts,
+    (state: ProductState) => state.productCart
 )

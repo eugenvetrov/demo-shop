@@ -11,3 +11,8 @@ export const updateProductNameSearch = createAction('[ProductFilter Component] u
 
 export const updateSelectedProductCategory = createAction('[ProductFilter Component] updateSelectedProductCategory',
                                             props<{ selectedCategory: ProductCategory | undefined}>());
+
+export const initProductCartMap = createAction('[ProductList Component] initProductCartMap')
+
+export const addProductToCart = createAction('[ProductList component] addProductToCart',
+                                            props<{ productAtCart: ProductId }>());

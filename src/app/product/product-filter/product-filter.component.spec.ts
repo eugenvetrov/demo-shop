@@ -16,13 +16,14 @@ describe('ProductFilterComponent', () => {
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
-      imports: [MatFormFieldModule, MatSelectModule, MatInputModule, StoreModule.forRoot(), NoopAnimationsModule],
-      declarations: [ProductFilterComponent],
-      providers: [
-        Router,
-        FormBuilder,
-        Store
+      imports: [
+        MatFormFieldModule,
+        MatSelectModule,
+        MatInputModule,
+        StoreModule.forRoot(),
+        NoopAnimationsModule
       ],
+      declarations: [ProductFilterComponent],
       schemas: [
         NO_ERRORS_SCHEMA
       ]

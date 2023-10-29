@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProductCartComponent } from './product-cart.component';
+import { StoreModule } from '@ngrx/store';
 
 describe('ProductCartComponent', () => {
   let component: ProductCartComponent;
@@ -8,6 +9,9 @@ describe('ProductCartComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [
+        StoreModule.forRoot()
+      ],
       declarations: [ProductCartComponent]
     });
     fixture = TestBed.createComponent(ProductCartComponent);
