@@ -5,18 +5,12 @@ import { MainModule } from '@app/main/main.module';
 import { ProductModule } from '@app/product/product.module'
 
 import { HomePageComponent } from './home-page/home-page.component';
-import { CategoryPageComponent } from './category-page/category-page.component';
 
 
 
 @NgModule({
   declarations: [
-    HomePageComponent,
-    CategoryPageComponent
-  ],
-  exports: [
-    HomePageComponent,
-    CategoryPageComponent
+    HomePageComponent
   ],
   imports: [
     CommonModule,

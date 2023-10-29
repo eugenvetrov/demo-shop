@@ -38,7 +38,7 @@ export class ProductFilterComponent {
     this.selectedCategory$ = this.store.select(selectedCategorySelector)
   }
   
-  async ngOnInit() {
+  ngOnInit() {
     this.productFilterFormCategorySubscription = this.productFilterForm.get('name')?.valueChanges.subscribe(
       (value) => {
         const productNameSearch = JSON.parse(JSON.stringify(value)).trim();

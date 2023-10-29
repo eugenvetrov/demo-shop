@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { ProductFilterComponent } from './product-filter/product-filter.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProductCartComponent } from './product-cart/product-cart.component';
 
 
 @NgModule({
@@ -20,12 +21,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ProductMenuComponent,
     ProductListComponent,
     ProductItemComponent,
-    ProductFilterComponent
+    ProductFilterComponent,
+    ProductCartComponent
   ],
   exports: [
     ProductMenuComponent,
     ProductListComponent,
-    ProductFilterComponent
+    ProductFilterComponent,
+    ProductCartComponent
   ],
   imports: [
     CommonModule,
