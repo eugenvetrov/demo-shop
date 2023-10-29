@@ -2,31 +2,25 @@ import { Injectable } from "@angular/core";
 import { productCartSelector } from "@app/stores/product/product.selectors";
 import { Store } from "@ngrx/store";
 import { Observable, Subscription } from 'rxjs';
-import { updateProductCart } from '../../../stores/product/product.actions';
-import { productsSelector } from '../../../stores/product/product.selectors';
+import { updateProductCart } from '@app/stores/product/product.actions';
+import { ProductService } from '@app/product/services/product.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductCartService {
-  products$: Observable<Product[]>
   productCart$: Observable<ProductCart[]>;
   products: Product[] = [];
   productCart: ProductCart[] = [];
   productCartSubscription: Subscription | undefined;
-  productsSubscription: Subscription | undefined;
   productCartMap: Map<number, number> = new Map();
 
   constructor(
     private store: Store<AppState>,
+    private productService: ProductService
   ) {
-    this.products$ = this.store.select(productsSelector)
+    this.products = this.productService.getProducts();
     this.productCart$ = this.store.select(productCartSelector)
-    this.productsSubscription = this.products$.subscribe((products) => {
-      this.products = products;
-    }
-
-    )
     this.productCartSubscription = this.productCart$.subscribe((productCart) => {
       this.productCart = productCart;
       productCart.forEach((product) => {
@@ -72,7 +66,5 @@ export class ProductCartService {
   ngOnDestroy() {
     if(this.productCartSubscription)
       this.productCartSubscription.unsubscribe();
-    if(this.productsSubscription)
-    this.productsSubscription.unsubscribe();
   }
 }

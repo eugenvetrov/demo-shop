@@ -27,8 +27,6 @@ export class ProductCartComponent {
         this.productCartTotalCount = this.productCartTotalCount + product.counter;
         this.productCartTotalPrice = this.productCartTotalPrice + product.totalPrice;
       })
-      console.log(cart);
-      
     })
   }
 }

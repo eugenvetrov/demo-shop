@@ -6,7 +6,6 @@ import { Observable } from 'rxjs/internal/Observable';
 import { selectProducts, productNameSearchSelector } from '@app/stores/product/product.selectors';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, combineLatest } from 'rxjs';
-import { ProductCartService } from '../services/cart/product-cart.service';
 
 
 @Component({
@@ -26,8 +25,7 @@ export class ProductListComponent {
   constructor(
     private productApi: ProductApiService,
     private store: Store<AppState>,
-    private route: ActivatedRoute,
-    private productCartService: ProductCartService
+    private route: ActivatedRoute
   ) { 
     this.productState$ = this.store.select(selectProducts);
     this.productNameSearch$ = this.store.select(productNameSearchSelector);
