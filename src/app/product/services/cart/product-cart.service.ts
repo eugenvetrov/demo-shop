@@ -51,15 +51,15 @@ export class ProductCartService {
   unmapProductCart() {
     const newProductCart: ProductCart[] = [];
     this.productCartMap.forEach((value, key) => {
-      const price = this.getPriceOfProduct(key)
-      newProductCart.push({ "productId": key, "counter": value, "totalPrice": value * price})
+      const price = this.getPriceOfProduct(key);
+      newProductCart.push({ "productId": key, "counter": value, "totalPrice": value * price});
     });
     return newProductCart;
   }
 
   getPriceOfProduct(productId: number) {
-    const product = this.products.find(product => product.id === productId)
-    if(product) return product.price
+    const product = this.products.find(product => product.id === productId);
+    if(product) return product.price;
     return 0
   }
 

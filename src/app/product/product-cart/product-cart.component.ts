@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { productCartSelector } from '../../stores/product/product.selectors';
 
 @Component({
@@ -10,6 +10,7 @@ import { productCartSelector } from '../../stores/product/product.selectors';
 })
 export class ProductCartComponent {
   productCart$: Observable<ProductCart[]>;
+  productCartSubscription: Subscription | undefined;
   productCartTotalCount: number = 0;
   productCartTotalPrice: number = 0;
 
@@ -20,7 +21,7 @@ export class ProductCartComponent {
   }
 
   ngOnInit() {
-    this.productCart$.subscribe((cart) => {
+    this.productCartSubscription = this.productCart$.subscribe((cart) => {
       this.productCartTotalCount = 0;
       this.productCartTotalPrice = 0;
       cart.forEach((product) => {
@@ -28,5 +29,10 @@ export class ProductCartComponent {
         this.productCartTotalPrice = this.productCartTotalPrice + product.totalPrice;
       })
     })
+  }
+
+  ngOnDestroy() {
+    if (this.productCartSubscription)
+      this.productCartSubscription.unsubscribe();
   }
 }
